@@ -1,23 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dotList, setDotList] = useState([]);
 
   const handleDotOnClick = (e) => {
     const dotPosition = {
-      top: e.pageX,
-      left: e.pageY,
-    }
-    console.log(dotPosition);
-  }
+      clientX: e.clientX,
+      clientY: e.clientY,
+    };
+    setDotList((prev) => [...prev, dotPosition]);
+  };
+
+  const handleUndo = (e) => {
+    e.stopPropagation();
+    console.log('undo');
+    setDotList((prev) => {
+      const copyArray = [...prev].slice(0, -1);
+      return copyArray;
+    });
+  };
 
   return (
-    <div className="App">
-      <span className='dot'onClick={handleDotOnClick} style={{}} />
+    <div className="App" onClick={handleDotOnClick}>
+      <button onClick={handleUndo}>Ctrl+Z</button>
+      {dotList.map((item) => (
+        <span
+          className="dot"
+          style={{ top: item.clientY, left: item.clientX }}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

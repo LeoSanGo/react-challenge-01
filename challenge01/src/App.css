@@ -21,7 +21,4 @@
   height: 1rem;
   border-radius: 50%;
   background: #fff;
-  animation: dot 1s infinite;
-  top: 100px;
-  left: 100px;
 }
